@@ -30,6 +30,7 @@
                 <br>
                 <button type="submit" name="Register" value="Register">Register</button><br>
                 <a href="index.php">Terug naar het begin</a><br>
+                <p>test</p>
             </form>
         </fieldset>
 </body>
