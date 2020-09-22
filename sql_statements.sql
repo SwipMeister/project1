@@ -1,6 +1,6 @@
--- als database project1 bestaat drop (delete)
---  Aanmaken van de database project1
-CREATE DATABASE IF NOT EXSISTS project1;
+/* als database project1 bestaat drop (delete)
+  Aanmaken van de database project1 */
+CREATE DATABASE IF NOT EXISTS project1;
 -- USE houd in dat de volgende statements gebruikt gaan worden in deze database (project1)
 USE project1;
 -- Tabel account aanmaken met primary key ID die tabel persoon gaat gebruiken om het account aan de persoon te  koppelen
@@ -22,3 +22,4 @@ CREATE TABLE Persoon(
     PRIMARY KEY(id),
 	FOREIGN KEY(id) REFERENCES Account(id)
 );
+
