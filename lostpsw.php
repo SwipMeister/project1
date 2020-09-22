@@ -20,7 +20,7 @@
             <a href="signup.php">Heb je nog geen account? Registreer nu</a><br>
             <a href="index.php">Terug naar het begin</a><br>
         </form>
-        </fieldset>
+</fieldset>
 </body>
 
 </html>
