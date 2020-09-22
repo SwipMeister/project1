@@ -7,18 +7,18 @@ USE project1;
 CREATE TABLE Account(
 
     id INT NOT NULL AUTO_INCREMENT,
-    email NOT NULL VARCHAR(255) UNIQUE,
-    password NOT NULL VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
 -- Tabel persoon aanmaken waar de foreign key op account id zit zodat account aan persoon gekoppeld wordt
 CREATE TABLE Persoon(
 
     id INT NOT NULL AUTO_INCREMENT,
-    username NOT NULL VARCHAR(255),
-    voornaam NOT NULL VARCHAR(255),
+    username  VARCHAR(255) NOT NULL,
+    voornaam  VARCHAR(255) NOT NULL,
     tussenvoegsel VARCHAR(255),
-    achternaam NOT NULL VARCHAR(255),
+    achternaam  VARCHAR(255) NOT NULL,
     PRIMARY KEY(id),
 	FOREIGN KEY(id) REFERENCES Account(id)
 );
