@@ -22,7 +22,7 @@
                 <a href="signup.php">Heb je nog geen account? Registreer nu</a><br>
                 <a href="lostpsw.php">Wachtwoord vergeten?</a>
             </form>
-        </fieldset>
+</fieldset>
 </body>
 
 </html>
