@@ -19,7 +19,32 @@ CREATE TABLE Persoon(
     voornaam  VARCHAR(255) NOT NULL,
     tussenvoegsel VARCHAR(255),
     achternaam  VARCHAR(255) NOT NULL,
+    account_id VARCHAR(255),
     PRIMARY KEY(id),
-	FOREIGN KEY(id) REFERENCES Account(id)
+	FOREIGN KEY(account_id) REFERENCES Account(id)
 );
+/* inset admin user in account table.*/
+INSERT INTO Account (email, password)
+VALUES ("2095333@talnet.nl","test123" );
 
+INSERT INTO Persoon (username, voornaam, tussenvoegsel, achternaam)
+VALUES ("admin123", "admin", "van", "naamvanachter" );
+
+/**/
+ALTER TABLE Persoon
+ADD account_id VARCHAR(255) NOT NULL AFTER id;
+
+ALTER TABLE Persoon
+ADD FOREIGN KEY (id) REFERENCES Account(id);
+
+ALTER TABLE Persoon 
+ADD account_id INT NOT NULL AFTER id, 
+ADD FOREIGN KEY (account_id) REFERENCES account(id)
+
+
+
+ALTER TABLE `project1`.`persoon` 
+DROP FOREIGN KEY `persoon_ibfk_2`,
+DROP FOREIGN KEY `persoon_ibfk_1`;
+ALTER TABLE `project1`.`persoon` 
+;
