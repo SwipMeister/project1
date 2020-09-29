@@ -71,9 +71,20 @@ class DB {
         }
     }
     
+
+
+    public function insertPersoon($id, $account_id, $lastID, $username, $voornaam, $achternaam, $email){
+
+        // try -> catch 
+        // begin transaction
+        // committen naar DB
+        $sql2 = "INSERT INTO persoon(id, account_id, username, voornaam, tussenvoegsel, achternaam) VALUES (:id, :account_id, :username, :voornaam, :tussenvoegsel, :achternaam)"; // replacement fields
+
+
+    
+    }
+
 }
-
-
 //
 // executen
 // lastInsertId() om id op te halen voor insert into persoon
