@@ -81,7 +81,7 @@
                 <label for="tussenvoegsel" >Tussenvoegsel:</label><br>
                 <input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="Optioneel"><br>
                 <label for="achternaam" >Achternaam:</label><br>
-                <input required type="text" name="achternaam" id="achternaam"><span class="error">*<?= $achtern;?></span><br>
+                <input required type="text" name="achternaam" id="achternaam"><span class="error">*<?= $achternaam;?></span><br>
                 <label for="email">email:</label><br>
                 <input required type="email" name="email" id="email"><span class="error"></span><br>
                 <label for="username">Username:</label><br>
