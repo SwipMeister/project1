@@ -43,7 +43,7 @@
         }
       
         if (empty($_POST["password"])) {
-          $passwordErr = "Password is required";
+          $passwordErr = "Password is verplicht";
         } else {
           $password = ($_POST["password"]);
         }
@@ -58,8 +58,10 @@
             $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
             exit;
         }
-         // redirect succcespage
+         // TODO: redirect succcespage/login
+         // TODO: session start
       }
+      
       
 ?>
 
@@ -79,10 +81,10 @@
                 <label for="voornaam">Voornaam:</label><br>
                 <input required type="text" name="voornaam" id="voornaam" ><span class="error">*<?= $voornaam;?></span><br>
                 <label for="tussenvoegsel" >Tussenvoegsel:</label><br>
-                <input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="Optioneel"><br>
+                <input type="text" name="tussenvoegsel" id="tussenvoegsel"><br>
                 <label for="achternaam" >Achternaam:</label><br>
                 <input required type="text" name="achternaam" id="achternaam"><span class="error">*<?= $achternaam;?></span><br>
-                <label for="email">email:</label><br>
+                <label for="email">E-mail:</label><br>
                 <input required type="email" name="email" id="email"><span class="error"></span><br>
                 <label for="username">Username:</label><br>
                 <input required pattern="[a-z]{1,15}+@" type="text"  name="username" id="username"><span class="error">*<?= $username;?></span><br>
