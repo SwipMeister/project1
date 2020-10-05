@@ -27,8 +27,8 @@
         header('Location: index.php');
         die();
       }elseif ($_POST["password"] !== $_POST["repassword"]) {
-          header('Location: signup.php');
           $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+          header('Location: signup.php');
           die(); //exit()
 
       } 
@@ -50,7 +50,6 @@
       } else {
         $email = ($_POST["email"]);
       }
-      
       
       if (empty($_POST["username"])) {
         $usernameErr = "Username is verplicht";
@@ -107,7 +106,7 @@
                 <label for="password" >Password:</label><br>
                 <input required minlength="10" maxlength="20" type="password" name="password" id="password"><span class="error"> *<?= $passwordErr;?></span><br>
                 <label for="repassword" >Repeat Password:</label><br>
-                <input required minlength="10" maxlength="20" type="password" name="repassword" id="password"> <span class="error"> *<?= $pwMatch;?></span><br>
+                <input required minlength="10" maxlength="20" type="password" name="repassword" id="password"> <span class="error"> *<?php if($pwMatch) echo $pwMatch;?></span><br>
                 <br><span><?= $success ?></span>
                 <button type="submit" name="Register" value="Register">Register</button><br>
                 <a href="index.php">Terug naar het begin</a><br>
