@@ -1,6 +1,5 @@
 <?php
-
-
+    // in span bevestigingsbericht dat registreren gelukt is.
 ?>
 
 <html>
@@ -12,6 +11,7 @@
 <body>
 <fieldset>
             <h3>Login</h3>
+            <span></span> 
             <form action="login.php" method="post" id="login">
                 <label for="username">Username:</label><br> <!-- required="required"-->
                 <input required type="text" name="username" id="username" pattern="[a-z]{1,15}+@"    ><br> <!-- required="required"-->
