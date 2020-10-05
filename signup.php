@@ -6,25 +6,26 @@
     // $db->executeQueryExample;
 
     // todo check op isset
+    
     // $voornaam = $_POST['voornaam'];
-    // $tussenvoegsel = $_POST['tussenvoegsel'];
     // $achternaam = $_POST['achternaam'];
     // $email = $_POST['email'];
     // $username = $_POST['username'];
     // $password = $_POST['password'];
     // $repassword = $_POST['repassword'];
 
-    $voornaam = $achternaam = $email = $username = $password = "";
+    $voornaam = $achternaam = $tussenvoegsel = $email = $username = $password = "";
     $voornaamErr = $achternaamErr = $emailErr = $usernameErr = $passwordErr = $pwMatch = $success = "";
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if ($_POST["password"] !== $_POST["repassword"]) {
-        $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
-        exit;
-      }elseif ($_POST["password"] === $_POST["repassword"]) {
+      // tussenvoegsel optioneel
+
+      if ($_POST["password"] === $_POST["repassword"]) {
         $success = "Registratie succesvol";
-        
+      }elseif ($_POST["password"] !== $_POST["repassword"]) {
+        $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+
       } 
 
       if (empty($_POST["voornaam"])) {
@@ -66,11 +67,13 @@
   
       // TODO: redirect succcespage/login
       // TODO: session start
-
+      
+      $tussenvoegsel = $_POST['tussenvoegsel'];
+      
     }
     
-    $db->insertAccount($email, $password);
-    $db->insertPersoon($id, $account_id, $lastID, $username, $voornaam, $achternaam, $email);
+    $account_id = $db->insertAccount($email, $password);
+    $db->insertPersoon($username, $voornaam, $tussenvoegsel, $achternaam, $email, $account_id);
     
     ?>
 
