@@ -17,14 +17,18 @@
     $voornaam = $achternaam = $tussenvoegsel = $email = $username = $password = "";
     $voornaamErr = $achternaamErr = $emailErr = $usernameErr = $passwordErr = $pwMatch = $success = "";
 
-
+    //TODO: foreach toepassen ipv losse if statements
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // tussenvoegsel optioneel
 
       if ($_POST["password"] === $_POST["repassword"]) {
         $success = "Registratie succesvol";
+        // TODO: redirect succcespage/login
+        // header('Location: welcome.php');
       }elseif ($_POST["password"] !== $_POST["repassword"]) {
         $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+        header('Location: signup.php');
+        die(); //exit()
 
       } 
 
@@ -65,8 +69,7 @@
         $password = ($_POST["repassword"]);
       }
   
-      // TODO: redirect succcespage/login
-      // TODO: session start
+
       
       $tussenvoegsel = $_POST['tussenvoegsel'];
       
