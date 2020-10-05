@@ -19,6 +19,14 @@
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if ($_POST["password"] !== $_POST["repassword"]) {
+        $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+        exit;
+      }elseif ($_POST["password"] === $_POST["repassword"]) {
+        $success = "Registratie succesvol";
+        
+      } 
+
       if (empty($_POST["voornaam"])) {
         $voornaamErr = "Voornaam is verplicht";
       } else {
@@ -58,15 +66,7 @@
   
       // TODO: redirect succcespage/login
       // TODO: session start
-          if ($_POST["password"] === $_POST["repassword"]) {
-      
-            $success = "Registratie succesvol";
-      
-          }else {
-            
-            $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
-            
-          }
+
     }
     
     $db->insertAccount($email, $password);
