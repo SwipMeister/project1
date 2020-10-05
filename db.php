@@ -44,7 +44,7 @@ class DB {
             echo "1. transaction begun";
 
             $sql1 = "INSERT INTO account(id, email, password) VALUES (:id, :email, :password)"; // replacement fields
-            echo '<br> 2. sql statement: '. $sql1;
+            echo '<br> 2. sql statement voor tabel account: '. $sql1;
             $stmt = $this->db->prepare($sql1); 
             echo '<br> 3. ';
             print_r($stmt);
@@ -57,30 +57,49 @@ class DB {
             // echo '<br> last inserted ID = ';
             // print_r($test1);
             $lastID = $this->db->lastInsertId();
-            echo $lastID;
-
-
+            echo '<br>' . $lastID;
+            
             $this->db->commit();
             // lastInsertId() -> meegeven aan je insert van je persoon
+            return $lastID;
 
-
+            
         } catch (Exception $a) {
             $this->db->rollback();
             throw $a;
-            echo "Rollback executed";
+            echo "Account Rollback executed";
         }
     }
     
+    
 
-
-    public function insertPersoon($id, $account_id, $lastID, $username, $voornaam, $achternaam, $email){
-
+    public function insertPersoon($username, $voornaam, $tussenvoegsel, $achternaam, $email, $lastID){
+        
         // try -> catch 
         // begin transaction
         // committen naar DB
-        $sql2 = "INSERT INTO persoon(id, account_id, username, voornaam, tussenvoegsel, achternaam) VALUES (:id, :account_id, :username, :voornaam, :tussenvoegsel, :achternaam)"; // replacement fields
+        try {
+            
+            //begin transaction
+            $this->db->beginTransaction();
+            echo "1. transaction begun";
+            // Statement voor tabel persoon na inserten van tabel account
+            $sql2 = "INSERT INTO persoon(id, account_id, username, voornaam, tussenvoegsel, achternaam) VALUES (:id, :account_id, :username, :voornaam, :tussenvoegsel, :achternaam)"; // replacement fields
+            echo '<br> 2. sql statement voor tabel persoon: '. $sql2;
+            $stmt2 = $this->db->prepare($sql2); 
+            echo '<br> 3. ';
+            print_r($stmt2);
+            
+            $stmt2->execute(['id' => NULL,'account_id' => $lastID,'username' => $username, 'voornaam' => $voornaam, 'tussenvoegsel' => $tussenvoegsel, 'achternaam' => $achternaam]);
+            
+            $this->db->commit();
 
-
+            
+        } catch (Exception $a) {
+            $this->db->rollback();
+            throw $a;
+            echo "Persoon Rollback executed";
+        }
     
     }
 
