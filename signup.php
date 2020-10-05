@@ -70,6 +70,7 @@
     }
     
     $db->insertAccount($email, $password);
+    $db->insertPersoon($id, $account_id, $lastID, $username, $voornaam, $achternaam, $email);
     
     ?>
 
