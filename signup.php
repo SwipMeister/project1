@@ -24,11 +24,12 @@
       if ($_POST["password"] === $_POST["repassword"]) {
         $success = "Registratie succesvol";
         // TODO: redirect succcespage/login
-        // header('Location: welcome.php');
+        header('Location: index.php');
+        die();
       }elseif ($_POST["password"] !== $_POST["repassword"]) {
-        $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
-        header('Location: signup.php');
-        die(); //exit()
+          header('Location: signup.php');
+          $pwMatch = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+          die(); //exit()
 
       } 
 
