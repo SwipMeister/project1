@@ -31,7 +31,7 @@ class Database {
 
     }
 
-    public function insertAccount($email, $password){
+    public function insertAccount($username, $email, $password){
 
         // try -> catch 
         // begin transaction
@@ -43,14 +43,14 @@ class Database {
             $this->db->beginTransaction();
             echo "1. transaction begun";
 
-            $sql1 = "INSERT INTO account(id, email, password) VALUES (:id, :email, :password)"; // replacement fields
+            $sql1 = "INSERT INTO account(id, username, email, password) VALUES (:id, :username, :email, :password)"; // replacement fields
             echo '<br> 2. sql statement voor tabel account: '. $sql1;
             $stmt = $this->db->prepare($sql1); 
             echo '<br> 3. ';
             print_r($stmt);
             // execute de stmt en hash het password
             $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->execute(['id' => NULL,'email' => $email,'password' => $hashPassword]);
+            $stmt->execute(['id' => NULL, 'username' => $username, 'email' => $email,'password' => $hashPassword]);
             echo '<br> password: ' . $hashPassword . '<br>';
 
             // $test1 = $this->db->lastInsertId();
@@ -73,7 +73,7 @@ class Database {
     
     
 
-    public function insertPersoon($username, $voornaam, $tussenvoegsel, $achternaam, $email, $lastID){
+    public function insertPersoon($voornaam, $tussenvoegsel, $achternaam, $email, $lastID){
         
         // try -> catch 
         // begin transaction
@@ -84,13 +84,13 @@ class Database {
             $this->db->beginTransaction();
             echo "1. transaction begun";
             // Statement voor tabel persoon na inserten van tabel account
-            $sql2 = "INSERT INTO persoon(id, account_id, username, voornaam, tussenvoegsel, achternaam) VALUES (:id, :account_id, :username, :voornaam, :tussenvoegsel, :achternaam)"; // replacement fields
+            $sql2 = "INSERT INTO persoon(id, account_id, voornaam, tussenvoegsel, achternaam) VALUES (:id, :account_id, :voornaam, :tussenvoegsel, :achternaam)"; // replacement fields
             echo '<br> 2. sql statement voor tabel persoon: '. $sql2;
             $stmt2 = $this->db->prepare($sql2); 
             echo '<br> 3. ';
             print_r($stmt2);
             
-            $stmt2->execute(['id' => NULL,'account_id' => $lastID,'username' => $username, 'voornaam' => $voornaam, 'tussenvoegsel' => $tussenvoegsel, 'achternaam' => $achternaam]);
+            $stmt2->execute(['id' => NULL,'account_id' => $lastID, 'voornaam' => $voornaam, 'tussenvoegsel' => $tussenvoegsel, 'achternaam' => $achternaam]);
             
             $this->db->commit();
 
