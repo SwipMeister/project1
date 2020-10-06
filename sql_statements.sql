@@ -43,8 +43,41 @@ ADD FOREIGN KEY (account_id) REFERENCES account(id)
 
 
 
-ALTER TABLE `project1`.`persoon` 
+ALTER TABLE `project1`.`persoon` ;
 DROP FOREIGN KEY `persoon_ibfk_2`,
 DROP FOREIGN KEY `persoon_ibfk_1`;
-ALTER TABLE `project1`.`persoon` 
-;
+ALTER TABLE `project1`.`persoon` ;
+
+
+
+-- deleten van rows in persoon en account voor overzicht
+DELETE FROM `persoon` WHERE account_id > 6;
+DELETE FROM `account` WHERE id > 3;
+
+
+
+-- 06-10-2020
+-- deleten van username column zodat hij bij account table kan
+ALTER TABLE persoon DROP IF EXISTS username;
+ALTER TABLE persoon 
+--  add usertype table
+CREATE TABLE usertype (
+
+id INT NOT NULL AUTO_INCREMENT,
+type VARCHAR(255) UNIQUE,
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+)
+
+ALTER TABLE persoon
+ADD created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+ADD updated_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE account
+ADD created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+ADD updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+ALTER TABLE account
+ADD username VARCHAR(255) NOT NULL UNIQUE,
+ADD type INT NOT NULL,
+ADD FOREIGN KEY (type) REFERENCES usertype(id);
