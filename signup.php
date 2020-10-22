@@ -10,24 +10,33 @@
         $fieldnames = ['voornaam', 'achternaam', 'email', 'username', 'password', 'repassword' ];
         
         $error = False; // 0
-        // foreach om te loopen door de fieldnames, als  deze niet gezet zijn 
+        // foreach om te loopen door de fieldnames, als  deze niet gezet zijn error = true
         foreach ($fieldnames as $fieldname) {
           if (!isset($_POST[$fieldname]) || empty($_POST[$fieldname])) {
+
             $error = True; // 1
+
             $errorMsg = "* Velden met een ster/asteriks zijn verplicht.";
-            echo 'Error heeft zich voorgedragen, velden zijn leeg.';
-          }
-        }
+          } 
+          
+        }// testen of header on success werkt.
         if ($_POST["password"] === $_POST["repassword"]) {
+
           $pwSuccess = "Registratie succesvol. U wordt geredirect naar de inlog pagina.";
+
           // TODO: redirect succcespage/login
-          // header("refresh:5;url=index.php");
+          header("refresh:5;url=index.php"); 
           // die();
+          
         }elseif ($_POST["password"] !== $_POST["repassword"]) {
+
             $pwFail = "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+
             // header('Location: signup.php');
             // echo "Wachtwoorden komen niet overeen. Vul opnieuw je wachtwoord in";
+
             $error = True;
+
             // die();
             // exit()
   
