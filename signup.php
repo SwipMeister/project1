@@ -47,8 +47,8 @@
           $db->insertPersoon($voornaam, $tussenvoegsel, $achternaam, $email, $account_id);
   
 
-          // header("refresh:3;url=index.php"); 
-          // die();
+          header("refresh:3;url=index.php"); 
+          exit(); // code hieronder mag niet executen 
           
         }else {
             // error message in variabele die naast het herhaalde password field plaatsvind
