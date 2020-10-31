@@ -29,6 +29,8 @@
 
     }
 
+    print_r(session_status());
+
 
 
 ?>
@@ -36,29 +38,28 @@
 <html>
     
 <head>
-<style>
-        .error {color: red; font-weight: bold;}
-        .success {margin-bottom:30px; font-weight: bold;}
-        /* form { text-align:center;} */
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">  
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <title>Log in!</title>
 </head>
 
 <body>
 <fieldset>
-            <h3>Login</h3>
-            <span class="error"><?php echo (!empty($loginStatus) && $loginStatus != '') ? $loginStatus . "<br>": ''  ?></span> 
-            <form action="index.php" method="post" id="login">
+    <form align="center" action="index.php" method="post" id="login">
+        <h3>Login</h3>
+        <span class="text-danger"><?php echo (!empty($loginStatus) && $loginStatus != '') ? $loginStatus ."<br>": ''  ?></span> 
                 <label for="username">Username:</label><br> <!-- required="required"-->
                 <input required type="text" name="username" id="username" pattern="[a-z]{1,15}+@"    ><br> <!-- required="required"-->
                 <label for="password" >Password:</label><br>
                 <input required type="password" name="password" id="password" minlength="10" maxlength="20">
                 <br><br>
-                <button type="submit" name="login" value="Login">Login</button><br>
-                <a href="signup.php">Heb je nog geen account? Registreer nu</a><br>
-                <a href="lostpsw.php">Wachtwoord vergeten?</a>
+                <button class="btn btn-secondary" type="submit" name="login" value="Login">Login</button><br    >
             </form>
-</fieldset>
+        </fieldset>
+    <div align="center">
+        <a class="btn btn-secondary" href="signup.php">Aanmelden</a>
+        <a class="btn btn-secondary" href="lostpsw.php">Wachtwoord vergeten?</a>
+    </div>
 </body>
 
 </html>
