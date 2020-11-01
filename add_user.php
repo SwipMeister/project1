@@ -76,11 +76,11 @@
             $achternaam = trim(strtolower($_POST['achternaam']));
 
             if ($input_name == 'addUser' ) {
-                echo 'adding user';
+
                 $msg = $db->signup($username, $voornaam, $tussenvoegsel, $achternaam, $email, $type, $password);
-                echo 'test';
+
             }elseif($input_name == 'update'){
-                echo 'updating';
+
                 // deze twee arrays geven we mee aan alterUser function
                 $account = [
                     'account_id' => $_POST['account_id'],
