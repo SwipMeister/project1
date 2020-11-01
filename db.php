@@ -65,7 +65,7 @@ class Database {
     }
     public function get_persoon_details($id) {
 
-        $statement = $this->db->prepare("SELECT * FROM account WHERE id=:id");
+        $statement = $this->db->prepare("SELECT * FROM persoon WHERE id=:id");
         $statement->execute(['id'=>$id]);
         $persoon = $statement->fetch(PDO::FETCH_ASSOC);
         return $persoon;
@@ -264,6 +264,8 @@ class Database {
                     session_start();
     
                     // userdate opslaan in session variables
+                    
+
                     $_SESSION['id'] = $result['id'];
                     $_SESSION['username'] = $username;
                     // $_SESSION['usertype'] = $result['type']; add to $sql when usertype is fixed
