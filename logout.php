@@ -5,7 +5,8 @@ session_start();
 
 // unset all session variables. Not sure which? Check the login method!
 $_SESSION = ['username'];
-$_SESSION = [];
+$_SESSION = ['id'];
+
 
 // destroy the session
 session_destroy();

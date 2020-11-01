@@ -5,7 +5,16 @@
     // TODO:session start 
     session_start();
 
+    // zorgt ervoor dat pagina niet via URL te vinden is. 
+    if(isset($_SESSION['username']) && $_SESSION['username'] == true){
+        $_SESSION['loggedin'] = true;
 
+        
+    }else {
+        echo 'U bent niet ingelogd.';
+        header("refresh:3;url=index.php");
+        exit;
+    }
 
     $db = new Database('localhost', 'project1', 'root', '',  'utf8');
 
@@ -40,8 +49,8 @@
     <div align="center">
         <h3>User panel</h3>
         <p>Ingelogd als: <span style="font-weight:bold;"><?= $_SESSION["username"] ?></span></p>
-        <a class="btn btn-secondary" href="welcome_user.php">Home</a>
-        <a class="btn btn-secondary" href="user_details.php">Show user details</a>
+        <a class="btn btn-secondary" href="welcome_user.php">Home</a> |
+        <a class="btn btn-secondary" href="user_details.php">Show user details</a> |
         <a class="btn btn-danger" href="logout.php">Logout</a>
     </div>
 
