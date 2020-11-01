@@ -42,7 +42,7 @@ ADD account_id INT NOT NULL AFTER id,
 ADD FOREIGN KEY (account_id) REFERENCES account(id)
 
 
-
+--  fix met nilu voor foreign key issue
 ALTER TABLE `project1`.`persoon` ;
 DROP FOREIGN KEY `persoon_ibfk_2`,
 DROP FOREIGN KEY `persoon_ibfk_1`;
@@ -81,3 +81,52 @@ ALTER TABLE account
 ADD username VARCHAR(255) NOT NULL UNIQUE,
 ADD type INT NOT NULL,
 ADD FOREIGN KEY (type) REFERENCES usertype(id);
+
+
+
+-- SQL script wat zonder poes of pas werkt, hierboven had aanpassingen nodig om het werkend te krijgen.
+-- db deleten als hij bestaat
+-- DROP DATABASE IF EXISTS project1;
+-- -- create new db
+-- CREATE DATABASE project1;
+
+-- -- default db
+-- USE project1;
+
+-- CREATE TABLE usertype(
+--     id INT NOT NULL AUTO_INCREMENT,
+--     type VARCHAR(255),
+--     created_at DATETIME NOT NULL,
+--     updated_at DATETIME NOT NULL,
+--     PRIMARY KEY(id)
+-- );
+
+-- -- create table account
+-- CREATE TABLE account(
+--     id INT NOT NULL AUTO_INCREMENT,
+--     type INT NOT NULL,
+--     username VARCHAR(250) UNIQUE,
+--     email VARCHAR(250) UNIQUE NOT NULL,
+--     password VARCHAR(250) NOT NULL,
+--     created_at DATETIME NOT NULL,
+--     updated_at DATETIME NOT NULL,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(type) REFERENCES usertype(id)
+-- );
+
+-- create table persoon
+-- CREATE TABLE persoon(
+--     id INT NOT NULL AUTO_INCREMENT,
+--     account_id INT NOT NULL,
+--     voornaam VARCHAR(250) NOT NULL,
+--     tussenvoegsel VARCHAR(250),
+--     achternaam VARCHAR(250) NOT NULL,
+--     created_at DATETIME NOT NULL,
+--     updated_at DATETIME NOT NULL,
+--     PRIMARY KEY(id),
+--     FOREIGN KEY(account_id) REFERENCES account(id)
+-- );
+
+-- admin en user 'roles' toevoegen zodat we laten onderscheid kunnen maken. 
+-- INSERT INTO usertype VALUES (NULL, 'admin', now(), now()), (NULL, 'user', now(), now());
+
