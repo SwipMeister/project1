@@ -5,7 +5,7 @@
 
     // TODO:session start 
     session_start();
-
+    $msg = $msg_update = '';
         // zorgt ervoor dat pagina niet via URL te vinden is. 
         if(isset($_SESSION['username']) && $_SESSION['username'] == true){
 
@@ -23,11 +23,14 @@
 
         // form is om een user toe te voegen, default staat op false, pas als er op edit geklikt wordt wordt dit deel uitgevoerd.
         $user_update_true = false;
-        $voornaam = $achternaam = $tussenvoegsel = $password = $msg = "";
+        //$voornaam = $achternaam = $tussenvoegsel = $password = $msg = $msg_update = "";
         
-        if (isset($_GET['account_id']) && isset($_GET['persoon_id'])) {
-            
-            $user_update_true = true;
+        $method = count($_GET) > 0 ? $_GET : $_POST; // bij het laden hebben we een get array (met persoon_id/account_id). onclick hebben we een gevulde $_POST, waardoor post array gevuld is
+        // print_r($method['account_id']);
+
+        if (isset($method['account_id']) && isset($method['persoon_id'])) {
+            // print_r($_GET['persoon_id']);
+            $user_update_true = true; // todo: cehck if needed
 
             // account
             // account_id meegeven met edit button (edit_user.php)
@@ -36,7 +39,6 @@
             $account_details = $db->get_account_details($account_id);
             $username = $account_details['username'];
             $email = $account_details['email'];
-
             //persoon
             // persoon_id meegeven met edit button (edit_user.php)
             $persoon_id = $_GET['persoon_id'];
@@ -45,17 +47,30 @@
             $voornaam = $persoon_details['voornaam'];
             $tussenvoegsel = $persoon_details['tussenvoegsel'];
             $achternaam = $persoon_details['achternaam'];
-    
+            // print_r($persoon_details);
+
         }
 
-        $input_name = 'addUser';
+        // echo $user_update_true;
+        // print_r($_SERVER['REQUEST_METHOD']);
         
-        if(isset($_POST['update'])){
+        $input_name = 'addUser';
+        if($user_update_true){
+        // if (array_key_exists('persoon_id', $_POST) && array_key_exists('account_id', $_POST) ) {
             $input_name = 'update';
+            // $user_update_true = true;
+            // echo 'test';
         }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST[$input_name]))) {
-        $fieldnames = [ 'type', 'username', 'email', 'password', 'voornaam', 'achternaam',  ];
+        
+        // print_r($_POST);
+        // echo "input_name is $input_name";
+        
+    if ($_SERVER["REQUEST_METHOD"] == "POST" &&  count($_POST)>0) {
+        echo 'check';
+        // sleep(3);
+        print_r($_POST);
+        // komt hier niet
+        $fieldnames = [ 'type', 'username', 'email', 'password', 'voornaam', 'achternaam' ]; // password is optional
             
         $fields_are_validated = $val->field_validator($fieldnames);
 
@@ -74,13 +89,15 @@
             $voornaam = trim(strtolower($_POST['voornaam']));
             $tussenvoegsel = isset($_POST['tussenvoegsel']) ? trim(strtolower($_POST['tussenvoegsel'])) : NULL;    
             $achternaam = trim(strtolower($_POST['achternaam']));
-
+            
+            echo "input in if $input_name";
             if ($input_name == 'addUser' ) {
-
+                echo 'hallo';
                 $msg = $db->signup($username, $voornaam, $tussenvoegsel, $achternaam, $email, $type, $password);
+                echo $msg;
 
             }elseif($input_name == 'update'){
-
+                echo 'doei';
                 // deze twee arrays geven we mee aan alterUser function
                 $account = [
                     'account_id' => $_POST['account_id'],
@@ -88,23 +105,28 @@
                     'email' => $_POST['email'],
                     'type' => $_POST['type']
                 ];
-
+                // print_r($account);
                 $persoon = [ 
                     'persoon_id' => $_POST['persoon_id'],
                     'voornaam' => $_POST['voornaam'],
                     'tussenvoegsel' => $_POST['tussenvoegsel'],
                     'achternaam' => $_POST['achternaam'],
                 ];
+                // print_r($persoon);
+                echo 'whooo';
 
-                $db->alterUser($account, $persoon);
+                $msg_update = $db->alterUser($account, $persoon);
 
-                header("refresh:3;url=edit_user.php");
-                exit;
+                // header("refresh:6;url=edit_user.php");
+                // exit;
 
             }
 
         }
     }
+
+
+    // password in html: value -> add user = hello world. update user = get from db, load in input (readonly)
 ?>
 
 
@@ -131,7 +153,7 @@
     </div>
 </fieldset>
 
-<form align="center" action="add_user.php" method="POST" style="margin-top:30px;">
+<form align="center" action="add_user.php" method="post" style="margin-top:30px;">
             <input type="hidden" name="account_id" value="<?php echo isset($_GET['account_id']) ? $_GET['account_id'] : ''; ?>">
             <input type="hidden" name="persoon_id" value="<?php echo isset($_GET['persoon_id']) ? $_GET['persoon_id'] : ''; ?>">
             
@@ -148,8 +170,8 @@
             <input required type="email" name="email" id="email" value="<?php if(isset($_POST["email"])){ echo htmlentities($_POST["email"]);}elseif($user_update_true){echo $email;}else{echo '';}; ?>"><span class="text-danger"></span><br>
             <label for="username">Username:</label><br>
             <input required pattern="[a-z]{1,15}+@" type="text"  name="username" id="username" value="<?php if(isset($_POST["username"])){ echo htmlentities($_POST["username"]);}elseif($user_update_true){echo $username;}else{echo '';}; ?>"><span class="text-danger"></span><br>
-            <label for="password" <?php if($user_update_true){?> hidden <?php } ?>>Password:</label><br>
-            <input required <?php if($user_update_true){?> hidden <?php } ?> minlength="10" maxlength="20" type="password" name="password" id="password"><span class="text-danger"></span><br>
+            <label for="password" <?php if($user_update_true){?> readonly <?php } ?>>Password:</label><br>
+            <input required <?php if($user_update_true){?> readonly <?php } ?> minlength="10" maxlength="20" type="password" name="password" id="password" value="helloworld"><span class="text-danger"></span><br>
             </div>
             <div class="form-group">
             <h3>Persoonsgegevens</h3>
@@ -161,7 +183,16 @@
             <input required type="text" name="achternaam" id="achternaam" value="<?php if(isset($_POST["achternaam"])){ echo htmlentities($_POST["achternaam"]);}elseif($user_update_true){echo $achternaam;}else{echo '';}; ?>"><span class="text-danger"></span><br>
             </div>
             <br><span class="text-success"><?php if($msg) echo $msg; ?></span>
-            <button class="btn btn-success" type="submit" name="<?php if($user_update_true){echo 'update';}else{echo 'addUser';}?>" value="<?php if($user_update_true){echo 'Update';}else{echo 'Add user';}?>"><?php if($user_update_true){echo 'update';}else{echo 'Add user';}?></button>
+            <br><span class="text-success"><?php if($msg_update) echo $msg_update; ?></span>
+            
+
+            <?php if ($user_update_true){ ?>
+                
+	<button class="btn" type="submit" name="update" value="update" >Update</button>
+<?php } else{ ?>
+	<button class="btn" type="submit" name="addUser" value="addUser" >Add</button>
+<?php } ?>
+            <!-- <button class="btn btn-success" type="submit" name="<?php // if($user_update_true){echo 'update';}else{echo 'addUser';}?>" value="<?php // if($user_update_true){echo 'Update';}else{echo 'Add user';}?>"><?php // if($user_update_true){echo 'update';}else{echo 'Add user';}?></button> -->
         </form>
 </body>
 

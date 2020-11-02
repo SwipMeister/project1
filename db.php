@@ -158,6 +158,7 @@ class Database {
     public function alterUser($account_details, $persoon_details) {
 
         if(is_array($account_details) && is_array($persoon_details)){
+            echo  'meh';
             try{
 
                 // start transactie
@@ -178,6 +179,7 @@ class Database {
 
                 // commit database change
                 $this->db->commit();
+                header('location: edit_user.php');
                 return 'User data succesfully updated';
             }catch(Exception $e){
                 $this->db->rollback();
@@ -313,7 +315,7 @@ class Database {
             $stmt = $this->db->prepare("DELETE FROM persoon WHERE id=:id");
             $stmt->execute(['id'=>$persoon_id]);
             // dan van account droppen
-            $stm = $this->db->prepare("DELETE FROM account WHERE id=:id");
+            $stmt = $this->db->prepare("DELETE FROM account WHERE id=:id");
             $stmt->execute(['id'=>$account_id]);
 
             $this->db->commit();
