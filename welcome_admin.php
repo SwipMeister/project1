@@ -36,7 +36,7 @@
         <h3>Admin panel</h3>
         <p>Ingelogd als: <span style="font-weight:bold;"><?= $_SESSION["username"] ?></span></p>
         <a class="btn btn-secondary" href="welcome_admin.php">Home</a> |
-        <a class="btn btn-secondary" href="add_user.php">Add/Edit user</a> |
+        <a class="btn btn-secondary" href="adduser_seperate.php">Add/Edit user</a> |
         <a class="btn btn-secondary" href="edit_user.php">View, edit or delete user</a> |
         <a class="btn btn-danger" href="logout.php">Logout</a>
     </div>
