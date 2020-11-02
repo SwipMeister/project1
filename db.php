@@ -179,7 +179,8 @@ class Database {
 
                 // commit database change
                 $this->db->commit();
-                header('location: edit_user.php');
+                echo
+                header("refresh:3;url=edit_user.php");
                 return 'User data succesfully updated';
             }catch(Exception $e){
                 $this->db->rollback();

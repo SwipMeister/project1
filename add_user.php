@@ -23,38 +23,44 @@
 
         // form is om een user toe te voegen, default staat op false, pas als er op edit geklikt wordt wordt dit deel uitgevoerd.
         $user_update_true = false;
+        $input_name = 'addUser';
         //$voornaam = $achternaam = $tussenvoegsel = $password = $msg = $msg_update = "";
         
         $method = count($_GET) > 0 ? $_GET : $_POST; // bij het laden hebben we een get array (met persoon_id/account_id). onclick hebben we een gevulde $_POST, waardoor post array gevuld is
         // print_r($method['account_id']);
 
         if (isset($method['account_id']) && isset($method['persoon_id'])) {
-            // print_r($_GET['persoon_id']);
+            
+            
             $user_update_true = true; // todo: cehck if needed
-
             // account
             // account_id meegeven met edit button (edit_user.php)
-            $account_id = $_GET['account_id'];
+            if ($method == $_GET) {
+            $account_id = $method['account_id'];
+            print_r($account_id);
             // returned een assoc array
             $account_details = $db->get_account_details($account_id);
             $username = $account_details['username'];
             $email = $account_details['email'];
             //persoon
             // persoon_id meegeven met edit button (edit_user.php)
-            $persoon_id = $_GET['persoon_id'];
+            $persoon_id = $method['persoon_id'];
             // returned een assoc array
             $persoon_details = $db->get_persoon_details($persoon_id);
             $voornaam = $persoon_details['voornaam'];
             $tussenvoegsel = $persoon_details['tussenvoegsel'];
             $achternaam = $persoon_details['achternaam'];
             // print_r($persoon_details);
+            }
+           
+            
 
         }
 
         // echo $user_update_true;
         // print_r($_SERVER['REQUEST_METHOD']);
         
-        $input_name = 'addUser';
+        
         if($user_update_true){
         // if (array_key_exists('persoon_id', $_POST) && array_key_exists('account_id', $_POST) ) {
             $input_name = 'update';
@@ -63,8 +69,8 @@
         }
         
         // print_r($_POST);
-        // echo "input_name is $input_name";
-        
+        echo "input_name is $input_name";
+        print_r($method);
     if ($_SERVER["REQUEST_METHOD"] == "POST" &&  count($_POST)>0) {
         echo 'check';
         // sleep(3);
@@ -91,12 +97,7 @@
             $achternaam = trim(strtolower($_POST['achternaam']));
             
             echo "input in if $input_name";
-            if ($input_name == 'addUser' ) {
-                echo 'hallo';
-                $msg = $db->signup($username, $voornaam, $tussenvoegsel, $achternaam, $email, $type, $password);
-                echo $msg;
-
-            }elseif($input_name == 'update'){
+          if($input_name == 'update'){
                 echo 'doei';
                 // deze twee arrays geven we mee aan alterUser function
                 $account = [
@@ -120,6 +121,10 @@
                 // header("refresh:6;url=edit_user.php");
                 // exit;
 
+            }else{
+                echo 'hallo';
+                $msg = $db->signup($username, $voornaam, $tussenvoegsel, $achternaam, $email, $type, $password);
+                echo $msg;
             }
 
         }
@@ -142,16 +147,14 @@
     <header>
 
     </header>
-<fieldset>
     <div align="center">
-        <h3>Add/edit user details</h3>
-        <!-- <p>Ingelogd als: <span style="font-weight:bold;"><?= $username ?></span></p> -->
+        <h3>Admin panel</h3>
+        <p>Ingelogd als: <span style="font-weight:bold;"><?= $_SESSION["username"] ?></span></p>
         <a class="btn btn-secondary" href="welcome_admin.php">Home</a> |
-        <a class="btn btn-secondary" href="add_user.php">Add/Edit user</a> |
+        <a class="btn btn-secondary" href="adduser_seperate.php">Add/Edit user</a> |
         <a class="btn btn-secondary" href="edit_user.php">View, edit or delete user</a> |
         <a class="btn btn-danger" href="logout.php">Logout</a>
     </div>
-</fieldset>
 
 <form align="center" action="add_user.php" method="post" style="margin-top:30px;">
             <input type="hidden" name="account_id" value="<?php echo isset($_GET['account_id']) ? $_GET['account_id'] : ''; ?>">
@@ -197,6 +200,3 @@
 </body>
 
 </html>
-
-
-    
