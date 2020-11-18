@@ -217,7 +217,7 @@ class Database {
                 return "Nieuwe gebruiker toegevoegd.";
             }
             echo '<h3 align="center">Registratie voltooid. U wordt doorverwezen naar de login</h3>';
-            header("refresh:3;url=index.php");
+            header("refresh:1;url=index.php");
             // exit makes sure that further code isn't executed.
             exit;
             
@@ -236,7 +236,7 @@ class Database {
     public function login($username, $password) {
         
         // id, type, password opvragen van :username, dit is de username die de user invult
-        $sql = "SELECT id, password FROM account WHERE username = :username";
+        $sql = "SELECT id, password, type FROM account WHERE username = :username";
 
         // query preparen en executen
         $stmt = $this->db->prepare($sql);
@@ -271,24 +271,25 @@ class Database {
 
                     $_SESSION['id'] = $result['id'];
                     $_SESSION['username'] = $username;
+                    $_SESSION['type'] = $result['type'];
                     // $_SESSION['usertype'] = $result['type']; add to $sql when usertype is fixed
                     $_SESSION['loggedin'] = true;
 
                     // 0 = DISABLED, 1 = NONE, 2 = ACTIVE
                     // print_r(session_status());
 
-                    header("refresh:3;url=welcome_admin.php"); 
+                    header("refresh:1;url=welcome_admin.php"); 
 
                     // returnt true of false (admin of user)
                     if ($this->user_admin_check($username)) {
                         echo 'Welkom ' . $username . '. U wordt doorverwezen naar de welkomstpagina';
-                        header("refresh:3;url=welcome_admin.php"); 
+                        header("refresh:1;url=welcome_admin.php"); 
                         exit(); // code hieronder mag niet executen 
 
                         
                     }else{
                         echo 'Welkom ' . $username . '. U wordt doorverwezen naar de welkomstpagina';
-                        header("refresh:3;url=welcome_user.php"); 
+                        header("refresh:1;url=welcome_user.php"); 
                         exit(); // code hieronder mag niet executen 
 
                     }
